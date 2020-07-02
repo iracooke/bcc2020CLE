@@ -1,3 +1,8 @@
+demo
+exercise_*
+*.html
+*_quotes.txt*
+
 # History files
 .Rhistory
 .Rapp.history
