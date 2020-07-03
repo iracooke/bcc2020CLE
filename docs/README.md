@@ -85,6 +85,8 @@ wget https://s3-ap-southeast-2.amazonaws.com/bc3203/EM_10k/EM1_R1.fastq.gz
 1. How would you modify this script so that it emits all 24 URLs for the 12 samples required?
 2. How would you modify this script so that it actually downloads all 24 URLs
 
+If you need help you can view the final answer [here](https://github.com/iracooke/bcc2020CLE/blob/master/exercise_1/01_download.sh)
+
 #### 02 aligning reads to the transcriptome
 
 We will now align each of the pairs of reads to the transcriptome using `bowtie2`. Before we can do this we first need to index the transcriptome using `bowtie2-build`. 
