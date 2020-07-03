@@ -2,12 +2,12 @@
 for n in $(seq 1 4);do mkdir -p exercise_$n;done
 
 if [[ ! -f exercise_1/H_mac_transcripts_codingseq.fasta ]]; then
-	wget "https://cloudstor.aarnet.edu.au/plus/s/v0wWlXGAaN1tKiY" -O exercise_1/H_mac_transcripts_codingseq.fasta
+	wget "https://cloudstor.aarnet.edu.au/plus/s/v0wWlXGAaN1tKiY/download" -O exercise_1/H_mac_transcripts_codingseq.fasta
 fi
 
 
 if [[ ! -f exercise_2/H_mac_protein.fasta ]]; then
-	wget "https://cloudstor.aarnet.edu.au/plus/s/APUXTkLZKWsXlEY" -O exercise_2/H_mac_protein.fasta && \
+	wget "https://cloudstor.aarnet.edu.au/plus/s/APUXTkLZKWsXlEY/download" -O exercise_2/H_mac_protein.fasta && \
 	cd exercise_3 && \
 	ln -s ../exercise_2/H_mac_protein.fasta . &&
 	cd ..
@@ -15,7 +15,7 @@ fi
 
 
 if [[ ! -f exercise_4/aten_example.vcf ]]; then
-	wget "https://cloudstor.aarnet.edu.au/plus/s/JmyKzTWksYmMuaU" -O exercise_4/aten_example.vcf
+	wget "https://cloudstor.aarnet.edu.au/plus/s/JmyKzTWksYmMuaU/download" -O exercise_4/aten_example.vcf
 fi
 
 if [[ ! -f exercise_4/aten_final_0.11.fasta ]]; then
