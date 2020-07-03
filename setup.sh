@@ -28,7 +28,7 @@ if [[ ! -f exercise_2/uniprot/uniprot_sprot.fasta ]]; then
 	wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz -O exercise_2/uniprot/uniprot_sprot.fasta.gz && \
 	cd exercise_2/uniprot/ && \
 	gunzip uniprot_sprot.fasta.gz && \
-	makeblastdb -dbtype 'prot' -in uniprot_sprot.fasta -title swissprot && \
+	makeblastdb -dbtype 'prot' -in uniprot_sprot.fasta -out swissprot && \
 	cd ../../
 fi
 
