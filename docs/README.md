@@ -473,6 +473,8 @@ join -t $'\t' -a 1 \
 	awk -F '\t' '{printf(">%s\t%s\n%s\n",$1,$3,$2)}'
 ```
 
+-------------
+
 ## Exercise 3
 
 In this exercise we will write an `awk` program to split a fasta file into chunks. 
@@ -573,6 +575,8 @@ Check that the correct number of entries is present in each file
 ```bash
 grep -c '>' *.fa
 ```
+
+-------------
 
 ## Exercise 4
 
