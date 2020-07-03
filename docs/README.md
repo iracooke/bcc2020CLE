@@ -4,6 +4,17 @@ This website is a companion reference for the corresponding [BCC2020 conference 
 
 This workshop is designed for students who already have a basic familiarity with running programs and navigating the filesystem in a unix shell.  It aims to refresh some of that basic knowledge and then build upon it to demonstrate powerful features of the shell that can be used to speed up common bioinformatics tasks.
 
+
+
+## About the Instructor
+
+[Ira Cooke](https://research.jcu.edu.au/portfolio/ira.cooke/) is a senior lecturer in bioinformatics at James Cook University and co-director of its [Centre for Tropical Bioinformatics and Molecular Biology](https://www.jcu.edu.au/ctbmb).  
+
+You can find out more about his research interests on his [staff webpage](https://research.jcu.edu.au/portfolio/ira.cooke/), at [marine-omics.net](https://www.marine-omics.net/) and [marine-molecular-biology.group](https://www.marine-molecular-biology.group/).  
+
+He is also occasionally active on twitter [@iracooke](https://twitter.com/iracooke)
+
+
 ## Setup
 
 #### If you are a BCC2020 workshop participant
@@ -630,12 +641,6 @@ grep -v '^#' aten_example.vcf | awk '{printf("%s:%s-%s\n",$1,$2-50,$2+50)}' | sh
 ```
 
 > Note. This strategy illustrates some bash principles but it isn't perfect.  We can run off the ends of chromosomes. A more precise way to do this is using the `bedtools` utility.
-
-
-## About the Instructor
-
-[Ira Cooke](https://research.jcu.edu.au/portfolio/ira.cooke/) is a senior lecturer in bioinformatics at James Cook University and co-director of its [Centre for Tropical Bioinformatics and Molecular Biology](https://www.jcu.edu.au/ctbmb).  You can find out more about his research interests on his [staff webpage](https://research.jcu.edu.au/portfolio/ira.cooke/), at [marine-omics.net](https://www.marine-omics.net/) and [marine-molecular-biology.group](https://www.marine-molecular-biology.group/).  He is also occasionally active on twitter [@iracooke](https://twitter.com/iracooke)
-
 
 
 
