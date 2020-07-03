@@ -33,7 +33,7 @@ General introduction and theoretical background
   > - Map paired-end reads to a reference (25 minutes)
   > - Basic functional annotation with BLAST (25 minutes)
   > - Splitting a fasta file into chunks (25)
-  > - Extracting gene sets from a fasta file (25 minutes)
+  > - Designing probes from a variant file (25 minutes)
 
 ## What is the command line? {.build}
 
@@ -99,8 +99,6 @@ this won't happen automatically!
 - `cp` / `mv` : Copy / Rename files
 
 Try `cd`, `ls` and `pwd` in your terminal window.
-
-Can you list the contents of the `demo` directory?
 
 ## Filesystem paths
 
@@ -539,6 +537,6 @@ To finish this off we only need to substitute the `wget` command for `echo`. `wg
 
 ## learning More
 
-Believe it or not the bash manual is very good.  
+Bruce Barnett's Grymoire https://www.grymoire.com/Unix/index.html . This page looks old and unmaintained but it is a gold mine of useful information. It is also quite witty and well written
 
-https://www.gnu.org/software/bash/manual/bash.html
+The bash manual is the definitive reference https://www.gnu.org/software/bash/manual/bash.html
