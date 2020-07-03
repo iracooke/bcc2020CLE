@@ -105,14 +105,132 @@ bowtie2
 
 You should see a whole lot of text printed.  These are all the `bowtie2` options.  Scroll to the top to see basic usage which looks like this
 
-> Usage:
-  bowtie2 [options]* -x <bt2-idx> {-1 <m1> -2 <m2> | -U <r>} [-S <sam>]
+> Usage: bowtie2 [options]* -x <bt2-idx> -1 <m1> -2 <m2>
+
+For paired-end reads we need to supply three arguments
+- `-x` : The indexed reference. In this case `H_mac_transcripts_codingseq`
+- `-1` : File containing forward reads
+- `-2` : File containing reverse reads
+
+For example
+
+```bash
+bowtie2 -x H_mac_transcripts_codingseq -1 EM1_R1.fastq.gz -2 EM1_R2.fastq.gz
+```
+
+This prints output in `sam` format directly to standard output.  We could redirect this to a `sam` file like so
+
+```bash
+bowtie2 -x H_mac_transcripts_codingseq -1 EM1_R1.fastq.gz -2 EM1_R2.fastq.gz > EM1.sam
+```
+
+Now that we have a method for aligning a single sample our goal is to write a script to automate the process for all 12 samples. 
 
 
+Start by pasting the following code into your `02_align.sh` file
+
+```bash
+for r1 in *R1.fastq.gz;do
+	echo $r1
+done
+```
+
+Then run your file like this 
+
+```bash
+bash 02_align.sh
+```
+
+This is step 1 of the process.  We have a method for iterating over each of the forward read files.  We still need to figure out how to do the following;
+
+1. Obtain the name of the reverse read file based on the name of the forward read
+2. Obtain the name of the sample itself
+3. Enter code to run the command (instead of `echo`)
+
+Note that we are using `echo` here for debugging purposes.  It allows us to build up the script gradually, verifying that we have each piece of information before we put it all into a working command. 
+
+Now try the following (just in your Terminal don't enter it into the `02_align.sh` script)
+
+```bash
+r1=EM1_R1.fastq.gz
+echo $r1
+echo ${r1/R1/R2}
+```
+
+The second `echo` command uses an example of [parameter expansion](https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html) which is a very powerful feature of bash. It is often use to manipulate text and is very useful for transforming filenames. The form we used above has the general form:
+
+> ${parameter/pattern/string}
+
+And will substitute `string` for the first occurrence of `pattern`.
+
+Now try another form of `parameter expansion`.
+
+```bash
+r1=EM1_R1.fastq.gz
+echo ${r1%_R1.fastq.gz}
+```
+
+This time parameter expansion chopped off the trailing part of the `$r1` variable to produce the sample name. 
+
+Now we have the pieces we need to implement `02_align.sh`
+
+Replace the code in `02_align.sh` with the following code
+
+```bash
+for r1 in *R1.fastq.gz;do
+	r2=${r1/R1/R2}
+	sample=${r1%_R1.fastq.gz}
+	bowtie2 -x H_mac_transcripts_codingseq -1 $r1 -2 $r2 > $sample.sam
+done
+```
+
+And run it like this
+
+```bash
+bash 02_align.sh
+```
+
+
+#### Summarising `sam` files
+
+Try running the tool `samtools flagstat` on one of the `.sam` files
+
+```bash
+samtools flagstat EM1.sam
+```
+
+This prints some useful summary information. We might want to do this for all the `.sam` files. We will use this an example to introduce the `parallel` tool which allows us to run operations in parallel in a simple way. 
+
+Create a new empty script file, call it `03_flagstat.sh` and save it inside the `example_1` directory. 
+
+
+
+#### (Optional) Explore `sam` files
+
+Try viewing the contents of one of the `.sam` files with `samtools view`
+
+```bash
+samtools view -S EM1.sam
+```
+
+This looks complicated but it is just a tabular format.  The columns are all [described here](https://en.wikipedia.org/wiki/SAM_%28file_format%29).  Each line in the file represents an alignment (a read and its position in the reference). A single read can have multiple alignments. 
+
+Our data is extremely sparse. We have just 200 reads for each sample and something like 22.5k transcript sequences in the reference. One nice aspect of this is that it allows us to see the paired nature of the reads easily.  Since each pair comes from the same cDNA fragment there should usually be exactly 2 reads for each gene.  This is because the data is very sparse we will rarely have independent reads from the same gene. 
+
+You can verify this as follows
+
+1. Use `awk` to extract the third column of the file which contains the gene name
+```bash
+samtools view -S EM1.sam | awk '{print $3}'
+```
+2. Use `sort` and `uniq` to count occurrences
+```bash
+samtools view -S EM1.sam | awk '{print $3}' | sort | uniq -c
+```
 
 ## About the Instructor
 
-[Ira Cooke](https://research.jcu.edu.au/portfolio/ira.cooke/) is a senior lecturer in bioinformatics at James Cook University and co-director of its [Centre for Tropical Bioinformatics and Molecular Biology](https://www.jcu.edu.au/ctbmb).  You can find out more about his research interests on his [staff webpage](https://research.jcu.edu.au/portfolio/ira.cooke/), and at [marine-omics.net](https://www.marine-omics.net/) and [marine-molecular-biology.group](https://www.marine-molecular-biology.group/).  He is also occasionally active on twitter [@iracooke](https://twitter.com/iracooke)
+[Ira Cooke](https://research.jcu.edu.au/portfolio/ira.cooke/) is a senior lecturer in bioinformatics at James Cook University and co-director of its [Centre for Tropical Bioinformatics and Molecular Biology](https://www.jcu.edu.au/ctbmb).  You can find out more about his research interests on his [staff webpage](https://research.jcu.edu.au/portfolio/ira.cooke/), at [marine-omics.net](https://www.marine-omics.net/) and [marine-molecular-biology.group](https://www.marine-molecular-biology.group/).  He is also occasionally active on twitter [@iracooke](https://twitter.com/iracooke)
 
 
 
