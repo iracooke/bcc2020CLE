@@ -191,7 +191,7 @@ bash 02_align.sh
 ```
 
 
-#### Summarising `sam` files
+#### 03 Summarising `sam` files
 
 Try running the tool `samtools flagstat` on one of the `.sam` files
 
@@ -203,9 +203,60 @@ This prints some useful summary information. We might want to do this for all th
 
 Create a new empty script file, call it `03_flagstat.sh` and save it inside the `example_1` directory. 
 
+Paste the following code into the file and save it
 
+```bash
+dostats(){
+	sample=${1%.sam}
+	samtools flagstat $sample.sam > $sample.stats
+}
 
-#### (Optional) Explore `sam` files
+export -f dostats
+
+parallel -j 12 dostats ::: *.sam
+```
+
+Now try running the script
+
+```bash
+bash 03_flagstat.sh
+```
+
+Type `ls *.stats` to see all the new files it generated. 
+
+What is going on in this script?  
+
+There are two new concepts here
+
+1. Functions. This script captures several commands into a function called `dostats()`  
+2. The `parallel` command. This allows us to run `dostats()` on 12 processes simultaneously.
+
+Let's play with these in the Terminal to get familiar with them. 
+
+First the parallel command
+
+```bash
+parallel -j 4 echo ::: $(seq 1 12)
+```
+
+On the right of the `:::` we have generated a sequence 1 through to 12.  Each of these is passed to `echo` but parallel is running them 4 at a time. 
+
+When running complex sequences of commands with `parallel` it is often easier to capture these in a function. Try defining a function as follows;
+
+```bash
+myecho() { sleep 1; echo "my $1"; }
+```
+
+This waits one second and then prints it's argument along with a `my ` prefix.
+
+Now try running this with `parallel`
+
+```bash
+export -f myecho
+parallel -j 4 myecho ::: $(seq 1 12)
+```
+
+#### 04 (Optional) Explore `sam` files
 
 Try viewing the contents of one of the `.sam` files with `samtools view`
 
@@ -227,6 +278,12 @@ samtools view -S EM1.sam | awk '{print $3}'
 ```bash
 samtools view -S EM1.sam | awk '{print $3}' | sort | uniq -c
 ```
+
+-------------
+
+
+
+## Exercise 2
 
 ## About the Instructor
 
