@@ -70,7 +70,31 @@ Let's start with a `bioawk` program that takes an action every 1000 records
 cat H_mac_protein.fasta | bioawk -c fastx '(NR-1)%1000==0{print $name, NR}'
 ```
 
-This isn't what we want yet but it is a start.  Since we want separate files for each 1000 proteins we can use this action specifier to change a filename variable.  Let's start putting this into `split.awk`. Copy the following into `split.awk`
+In this case the *Pattern* we have used is quite interesting. It is;
+
+```awk
+(NR-1)%1000==0
+```
+
+This uses the modulo operator `%` which gives the remainder of a division.  In this case it gives the remainder after dividing (NR-1) by 1000.  This will equal 0 when NR is 1, 1001, 2001 and so on.
+
+Eventually we will build our `awk` program up quite a bit so let's put it into a file instead of running it on one line. Create a file called `split.awk` and copy the following contents into it;
+
+```awk
+(NR-1)%1000==0{
+	print $name, NR
+}
+```
+
+Now we can achieve the same result as before by referring to the `awk` program in our file
+
+```bash
+cat H_mac_protein.fasta | bioawk -c fastx -f split.awk
+```
+
+This isn't what we want yet but it is a start.  
+
+Since we want separate files for each 1000 proteins we can use the action specifier to change a filename variable.  Let's start putting this into `split.awk`. Copy the following into `split.awk`
 
 ```awk
 (NR-1)%1000==0{
