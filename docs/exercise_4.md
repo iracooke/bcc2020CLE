@@ -2,6 +2,12 @@
 
 In this exercise we will attempt to design probes for a random subset of variant loci in a genome
 
+Change directory into the `exercise_4` folder and then use `ls` to display the files present. 
+```bash
+cd ~/bcc2020cle/exercise_4
+ls
+```
+
 **Inputs**
 - A large `vcf` formatted file containing variant sites `aten_example.vcf`
 - A corresponding genome sequence `aten_filal_0.11.fasta`
