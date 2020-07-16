@@ -94,7 +94,7 @@ cat H_mac_protein.fasta | bioawk -c fastx -f split.awk
 
 This isn't what we want yet but it is a start.  
 
-Since we want separate files for each 1000 proteins we can use the action specifier to change a filename variable.  Let's start putting this into `split.awk`. Copy the following into `split.awk`
+Since we want separate files for each 1000 proteins we can use the action specifier to change a filename variable.  Let's start putting this into `split.awk`. Replace the contents of `split.awk` with this
 
 ```awk
 (NR-1)%1000==0{
@@ -109,7 +109,7 @@ And test it like this
 cat H_mac_protein.fasta | bioawk -c fastx -f split.awk
 ```
 
-The rest is relatively easy.  We just print data to whatever the current file variable is.  
+The rest is relatively easy.  We just print data to whatever the current file variable is.  We can do this by adding another action to print the current fasta record. This time the pattern for the action is blank so it gets triggered for every record.
 
 Change your `awk` program to
 
