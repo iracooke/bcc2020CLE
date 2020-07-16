@@ -98,8 +98,6 @@ this won't happen automatically!
 - `mkdir` : Create directories
 - `cp` / `mv` : Copy / Rename files
 
-Try `cd`, `ls` and `pwd` in your terminal window.
-
 ## Filesystem paths
 
 A Path specifies the location of a directory in the filesystem.
@@ -108,12 +106,13 @@ A forward slash `/` is used to separate folders in the hierarchy
 
 For example this shows the path to your `HOME` directory
 
-```{bash, eval=FALSE}
-cd
+```{bash, eval=TRUE}
 pwd
 ```
 
 Notice how it starts with a `/`.  This means it is an *absolute* path.  An *absolute* path specifies the location from the very top of the hierarchy.  
+
+## Filesystem paths
 
 If a path doesn't start with `/` it is *relative*. A *relative* path specifies a location in relation to the current working directory.
 
@@ -123,6 +122,7 @@ For example in this series of the commands the second call to `cd` is using a *r
 cd /
 cd home/
 ```
+
 
 ## The shell as a command interpreter
 
@@ -182,6 +182,11 @@ The `echo` command simply evaluates its arguments and prints them back to screen
 echo "Hello"
 ```
 
+Echo can also be used to print the value of environment variables (more about those later)
+
+```{bash}
+echo $HOME
+```
 
 
 ## Filename globbing {.build}
@@ -248,7 +253,7 @@ Often we want to capture the output of a command into a file.  This can be done 
 For example we could capture all quotes attributed to Darth Vader
 
 ```bash
-fortune -m "- Darth Vader" > vader_quotes.txt
+fortune -m "Darth Vader" > vader_quotes.txt
 ```
 
 Try entering this into your terminal. It should create a file called `vader_quotes.txt`. Use the `head` command to look at the first few lines of this file
@@ -264,7 +269,7 @@ Notice how when we used `>` to redirect output there were still quite a few line
 Sometimes we might want to capture standard error as well as standard output, but in this case *Standard Error* is just getting in the way.  We can modify the redirection to specifically redirect *Standard Output* to our file and *Standard Error* to nowhere (`/dev/null`).  We use the numerical designator `2` to refer to *Standard Error*
 
 ```bash
-fortune -m "- Darth Vader" 2>/dev/null > vader_quotes.txt
+fortune -m "Darth Vader" 2>/dev/null > vader_quotes.txt
 ```
 
 Another thing to note about `>` is that it always overwrites its output.  To append output to an existing file use `>>`.  
@@ -272,8 +277,8 @@ Another thing to note about `>` is that it always overwrites its output.  To app
 For example if we wanted quotes by Darth Vader and Yoda we could do
 
 ```bash
-fortune -m "- Darth Vader"  > vader_yoda_quotes.txt
-fortune -m "- Yoda"  >> vader_yoda_quotes.txt
+fortune -m "Darth Vader"  > vader_yoda_quotes.txt
+fortune -m "Yoda"  >> vader_yoda_quotes.txt
 ```
 
 ## Simple Text Searching
@@ -311,7 +316,7 @@ The *pipe* operator is `|`.  It sends output from one command to become the inpu
 For example, in order to count the number of Darth Vader quotes in the `fortune` database we first ran `fortune` and then `grep`.  Up to now we used an intermediate file `vader_quotes.txt` to allow us to combine these two programs. Instead of doing this we can accomplish the entire task in one line with a pipe
 
 ```{bash}
-fortune -m "- Darth Vader" 2>/dev/null | grep -c '^%$'
+fortune -m "Darth Vader" 2>/dev/null | grep -c '^%$'
 ```
 
 This is passing data as shown the diagram below

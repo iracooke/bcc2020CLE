@@ -156,46 +156,45 @@ And run it like this
 bash 02_align.sh
 ```
 
+#### 03 Convert `sam` to `bam`
 
-#### 03 Summarising `sam` files
-
-Try running the tool `samtools flagstat` on one of the `.sam` files
+The `sam` format is human readable but isn't very efficient.  For further processing it is often better to convert to `bam` which is a more efficient binary format. One (of many) ways to do this is using the `samtools view` command.  For example to convert one file
 
 ```bash
-samtools flagstat EM1.sam
+samtools view -b -S EM1.sam > EM1.bam
 ```
 
-This prints some useful summary information. We might want to do this for all the `.sam` files. We will use this an example to introduce the `parallel` tool which allows us to run operations in parallel in a simple way. 
+We might want to do this for all the `.sam` files. We will use this an example to introduce the `parallel` tool which allows us to run operations in parallel in a simple way. 
 
-Create a new empty script file, call it `03_flagstat.sh` and save it inside the `example_1` directory. 
+Create a new empty script file, call it `03_sam2bam.sh` and save it inside the `example_1` directory. 
 
 Paste the following code into the file and save it
 
 ```bash
-dostats(){
+sam2bam(){
 	sample=${1%.sam}
-	samtools flagstat $sample.sam > $sample.stats
+	samtools view -b -S $sample.sam > $sample.bam
 }
 
-export -f dostats
+export -f sam2bam
 
-parallel -j 12 dostats ::: *.sam
+parallel -j 12 sam2bam ::: *.sam
 ```
 
 Now try running the script
 
 ```bash
-bash 03_flagstat.sh
+bash 03_sam2bam.sh
 ```
 
-Type `ls *.stats` to see all the new files it generated. 
+Type `ls *.bam` to see all the new files it generated. 
 
 What is going on in this script?  
 
 There are two new concepts here
 
-1. Functions. This script captures several commands into a function called `dostats()`  
-2. The `parallel` command. This allows us to run `dostats()` on 12 processes simultaneously.
+1. Functions. This script captures several commands into a function called `sam2bam()`  
+2. The `parallel` command. This allows us to run `sam2bam()` on 12 processes simultaneously.
 
 Let's play with these in the Terminal to get familiar with them. 
 
