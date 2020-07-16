@@ -4,6 +4,12 @@ In this exercise we will write an `awk` program to split a fasta file into chunk
 
 This is useful to parallelise certain programs (eg Interproscan) that don't behave well with lots of sequences or aren't properly parallelised internally.  
 
+Change directory into the `exercise_3` folder and then use `ls` to display the files present. 
+```bash
+cd ~/bcc2020cle/exercise_3
+ls
+```
+
 **Inputs**
 - A large `fasta` file `H_mac_protein.fasta` containing over 22k sequences
 
@@ -22,7 +28,7 @@ For example the following `bioawk` command prints the name of each fasta record
 cat H_mac_protein.fasta | bioawk -c fastx '{print $name}'
 ```
 
-Note that I always start by `awk` commands using `cat` to send data via a pipe.  This is handy because it puts the `awk` command at the end of the line so I can easily edit it. 
+Note that I always start my `awk` commands using `cat` to send data via a pipe.  This is handy because it puts the `awk` command at the end of the line so I can easily edit it. 
 
 The general usage of `awk` is
 
@@ -35,7 +41,8 @@ pattern { action }
 ```
 
 *Action*
-:ets look closely at the action in the example above. The action is
+
+Lets look closely at the action in the example above. The action is
 
 ```awk
 print $name

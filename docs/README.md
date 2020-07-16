@@ -38,7 +38,7 @@ cd bcc2020cle
 wget -L https://raw.githubusercontent.com/iracooke/bcc2020CLE/master/setup.sh
 bash setup.sh
 ```
-4. Install the following required packages, `samtools`, `parallel`, `bowtie2`
+4. Install the following required packages, `samtools`, `parallel`, `bowtie2`, `bioawk`
 
 
 ## Introduction
